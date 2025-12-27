@@ -1,4 +1,4 @@
-package com.example.demo;
+package br.com.ms_entregas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
