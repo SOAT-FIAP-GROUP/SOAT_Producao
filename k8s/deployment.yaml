@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: entregas-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: entregas-app
+  template:
+    metadata:
+      labels:
+        app: entregas-app
+    spec:
+      containers:
+      - name: entregas-container
+        image: ${DOCKER_IMAGE}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: entregas-config
+              key: spring.datasource.url
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: entregas-config
+              key: spring.datasource.username
+        - name: SPRING_PROFILES_ACTIVE
+          valueFrom:
+            configMapKeyRef:
+              name: entregas-config
+              key: spring.profiles.active
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: entregas-secret
+              key: spring.datasource.password
+        resources:
+          requests:
+            cpu: "100m"
+            memory: 200Mi
+          limits:
+            cpu: "300m"
+            memory: 400Mi
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+          initialDelaySeconds: 120
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+          initialDelaySeconds: 120
+          periodSeconds: 5
