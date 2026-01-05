@@ -7,7 +7,7 @@ services:
     restart: always
     environment:
       MARIADB_ROOT_PASSWORD: admin
-      MARIADB_DATABASE: entrega
+      MARIADB_DATABASE: entregas
     ports:
       - "3307:3306"
     volumes:
