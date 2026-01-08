@@ -8,6 +8,7 @@ import br.com.ms_entregas.gateway.IPedidoGateway;
 import br.com.ms_entregas.gateway.impl.EntregaGateway;
 import br.com.ms_entregas.gateway.persistence.jpa.EntregaRepository;
 import br.com.ms_entregas.usecase.IEntregaUseCase;
+import br.com.ms_entregas.usecase.IFilaPedidosPreparacaoUseCase;
 import br.com.ms_entregas.usecase.impl.EntregaUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,10 +16,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class EntregaConfig {
 
-    @Bean
-    EntregaAPIController entregaAPIController(EntregaController entregaController) {
-        return new EntregaAPIController(entregaController);
-    }
+//    @Bean
+//    EntregaAPIController entregaAPIController(EntregaController entregaController) {
+//        return new EntregaAPIController(entregaController);
+//    }
 
     @Bean
     EntregaController entregaController(IEntregaUseCase entregaUseCase){
@@ -31,8 +32,8 @@ public class EntregaConfig {
     }
 
     @Bean
-    EntregaUseCase entregaUseCase(IPedidoGateway pedidoGateway, IEntregaGateway entregaGateway){
-        return new EntregaUseCase(pedidoGateway, entregaGateway);
+    EntregaUseCase entregaUseCase(IPedidoGateway pedidoGateway, IEntregaGateway entregaGateway, IFilaPedidosPreparacaoUseCase filaPedidosPreparacaoUseCase){
+        return new EntregaUseCase(pedidoGateway, entregaGateway, filaPedidosPreparacaoUseCase);
     }
 
     @Bean
