@@ -12,12 +12,12 @@ public class FilaPedidosController {
         this.filaPedidosPreparacaoUseCase = filaPedidosPreparacaoUseCase;
     }
 
-    public void removerPedidoDaFila(Long codigoPedido) {
-        filaPedidosPreparacaoUseCase.removerPedidoDaFila(codigoPedido);
+    public Mono<Void> removerPedidoDaFila(Long codigoPedido) {
+       return filaPedidosPreparacaoUseCase.removerPedidoDaFila(codigoPedido);
     }
 
-    public void salvarPedidoNaFila(Long codigoPedido) {
-        filaPedidosPreparacaoUseCase.salvar(codigoPedido);
+    public Mono<FilaPedidosPreparacao> salvarPedidoNaFila(Long codigoPedido) {
+        return filaPedidosPreparacaoUseCase.salvar(codigoPedido);
     }
 
 }
