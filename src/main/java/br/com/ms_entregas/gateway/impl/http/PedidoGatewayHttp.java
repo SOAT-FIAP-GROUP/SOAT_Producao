@@ -3,6 +3,7 @@ package br.com.ms_entregas.gateway.impl.http;
 import br.com.ms_entregas.gateway.IPedidoGateway;
 import br.com.ms_entregas.gateway.entity.enums.StatusPedidoEnum;
 import br.com.ms_entregas.gateway.impl.http.client.PedidoClient;
+import br.com.ms_entregas.gateway.impl.http.dto.response.PedidoResponse;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -16,12 +17,13 @@ public class PedidoGatewayHttp implements IPedidoGateway {
     }
 
     @Override
-    public Mono<Void> entregarPedidoFila(Long pedidoId) {
-        return pedidoClient.removerPedidoDaFilaDePreparo(pedidoId);
-    }
-
-    @Override
     public Mono<Void> atualizarStatusPedido(Long pedidoId, StatusPedidoEnum statusPedidoEnum) {
         return pedidoClient.atualizarStatusPedido(pedidoId, statusPedidoEnum);
     }
+
+    @Override
+    public Mono<PedidoResponse> buscarPedidoPorId(Long idPedido) {
+        return pedidoClient.buscarPedidoPorId(idPedido);
+    }
+
 }

@@ -1,6 +1,7 @@
 package br.com.ms_entregas.gateway.impl.http.client;
 
 import br.com.ms_entregas.gateway.entity.enums.StatusPedidoEnum;
+import br.com.ms_entregas.gateway.impl.http.dto.response.PedidoResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -51,6 +52,24 @@ public class PedidoClient {
                                 codigo, status, e)
                 );
     }
+
+    public Mono<PedidoResponse> buscarPedidoPorId(Long codigo) {
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(BASEURL + "/buscar/{codigoPedido}")
+                        .build(codigo)
+                )
+                .retrieve()
+                .bodyToMono(PedidoResponse.class)
+                .doOnSuccess(v ->
+                        log.info("Sucesso ao buscar Pedido com id {}.", codigo)
+                )
+                .doOnError(e ->
+                        log.error("Erro ao buscar Pedido com id {}. Error={}",
+                                codigo, e)
+                );
+    }
+
 
 }
 
