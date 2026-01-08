@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: entregas-app
+  name: producao-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: entregas-app
+      app: producao-app
   template:
     metadata:
       labels:
-        app: entregas-app
+        app: producao-app
     spec:
       containers:
-      - name: entregas-container
+      - name: producao-container
         image: ${DOCKER_IMAGE}
         imagePullPolicy: Always
         ports:
@@ -22,22 +22,27 @@ spec:
         - name: SPRING_DATASOURCE_URL
           valueFrom:
             configMapKeyRef:
-              name: entregas-config
+              name: producao-config
               key: spring.datasource.url
+        - name: SERVICE_URL_PEDIDO
+          valueFrom:
+            configMapKeyRef:
+              name: producao-config
+              key: services.pedido.url
         - name: SPRING_DATASOURCE_USERNAME
           valueFrom:
             configMapKeyRef:
-              name: entregas-config
+              name: producao-config
               key: spring.datasource.username
         - name: SPRING_PROFILES_ACTIVE
           valueFrom:
             configMapKeyRef:
-              name: entregas-config
+              name: producao-config
               key: spring.profiles.active
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: entregas-secret
+              name: producao-secret
               key: spring.datasource.password
         resources:
           requests:
