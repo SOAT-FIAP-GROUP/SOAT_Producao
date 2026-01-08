@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface IEntregaGateway {
 
-    Optional<Entrega> findById (Long id);
+    Optional<Entrega> findById(Long id);
 
     Entrega save(Entrega entity);
 }

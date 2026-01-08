@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: producao-config
+data:
+  spring.profiles.active: ${SPRING_ACTIVE_PROFILE}
+  services.pedido.url: ${SERVICE_PEDIDO}

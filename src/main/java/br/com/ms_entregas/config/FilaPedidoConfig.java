@@ -1,11 +1,10 @@
 package br.com.ms_entregas.config;
 
-import br.com.ms_entregas.api.controller.FilaPedidosAPIController;
 import br.com.ms_entregas.controller.FilaPedidosController;
 import br.com.ms_entregas.gateway.IFilaPedidosPreparacaoGateway;
 import br.com.ms_entregas.gateway.IPedidoGateway;
 import br.com.ms_entregas.gateway.impl.FilaPedidosPreparacaoGateway;
-import br.com.ms_entregas.gateway.persistence.jpa.FilaPedidosPreparacaoRepository;
+import br.com.ms_entregas.gateway.persistence.IFilaPedidosPreparacaoRepository;
 import br.com.ms_entregas.usecase.IFilaPedidosPreparacaoUseCase;
 import br.com.ms_entregas.usecase.impl.FilaPedidosPreparacaoUseCase;
 import org.springframework.context.annotation.Bean;
@@ -26,8 +25,8 @@ public class FilaPedidoConfig {
 
 
     @Bean
-    IFilaPedidosPreparacaoGateway filaPedidoGateway(FilaPedidosPreparacaoRepository filaPedidosPreparacaoRepository) {
-        return new FilaPedidosPreparacaoGateway(filaPedidosPreparacaoRepository);
+    IFilaPedidosPreparacaoGateway filaPedidoGateway(IFilaPedidosPreparacaoRepository IFilaPedidosPreparacaoRepository) {
+        return new FilaPedidosPreparacaoGateway(IFilaPedidosPreparacaoRepository);
     }
 
     @Bean

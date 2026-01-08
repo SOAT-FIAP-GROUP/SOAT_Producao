@@ -9,12 +9,12 @@ import br.com.ms_entregas.gateway.entity.enums.StatusPedidoEnum;
 
 public class EntregaMapper {
 
-    public static EntregaResponse toResponse(Entrega entity, StatusPedidoEnum statusPedidoEnum){
+    public static EntregaResponse toResponse(Entrega entity, StatusPedidoEnum statusPedidoEnum) {
         return new EntregaResponse(entity.id(), statusPedidoEnum, entity.dataHoraEntrega());
     }
 
     public static EntregaEntity toEntityPersistence(Entrega entity) {
-        return new EntregaEntity(entity.id(), entity.pedido(), entity.dataHoraEntrega());
+        return new EntregaEntity(entity.id().toString(), entity.pedido().toString(), entity.dataHoraEntrega().toString());
     }
 
     public static Entrega toEntity(EntregaRequest entrega) {

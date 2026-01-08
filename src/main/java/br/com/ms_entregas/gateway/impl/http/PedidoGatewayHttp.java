@@ -23,6 +23,8 @@ public class PedidoGatewayHttp implements IPedidoGateway {
 
     @Override
     public Mono<PedidoResponse> buscarPedidoPorId(Long idPedido) {
+        System.out.println("passou" + idPedido);
+
         return pedidoClient.buscarPedidoPorId(idPedido);
     }
 

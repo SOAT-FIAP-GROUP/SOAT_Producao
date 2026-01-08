@@ -1,26 +1,36 @@
 package br.com.ms_entregas.gateway.entity;
 
 import br.com.ms_entregas.entity.FilaPedidosPreparacao;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSecondaryPartitionKey;
 
-@Table(name = "filapedidospreparacao")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "filapedidospreparacao")
+@DynamoDbBean
 public class FilaPedidosPreparacaoEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
 
-    private Long pedidocodigo;
+    private String codigo;
+
+    private String pedidoCodigo;
+
+    @DynamoDbPartitionKey
+    public String getCodigo() {
+        return codigo;
+    }
+
+    @DynamoDbSecondaryPartitionKey(indexNames = "pedidoCodigo")
+    public String getPedidoCodigo() {
+        return pedidoCodigo;
+    }
 
     public FilaPedidosPreparacao toModel() {
-        return new FilaPedidosPreparacao(this.codigo, this.pedidocodigo);
+        return new FilaPedidosPreparacao(Long.parseLong(this.codigo), Long.parseLong(this.pedidoCodigo));
     }
 }

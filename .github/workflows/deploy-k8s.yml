@@ -26,7 +26,7 @@ jobs:
 
       - name: Set Docker image variable
         run: |
-          DOCKER_IMAGE="${{ secrets.DOCKER_USERNAME }}/entrega-app:latest"
+          DOCKER_IMAGE="${{ secrets.DOCKER_USERNAME }}/producao-app:latest"
           echo "DOCKER_IMAGE=$DOCKER_IMAGE" >> $GITHUB_ENV
 
 
@@ -40,10 +40,22 @@ jobs:
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ vars.AWS_REGION }}
 
+      - name: Get SSM parameters
+        id: ssm
+        run: |
+          SPRING_ACTIVE_PROFILE=$(aws ssm get-parameter --name "SPRING_ACTIVE_PROFILE" --with-decryption --query "Parameter.Value" --output text)
+          echo "SPRING_ACTIVE_PROFILE=$SPRING_ACTIVE_PROFILE" >> $GITHUB_OUTPUT
+
+      - name: Render ConfigMap
+        run: |
+          export SPRING_ACTIVE_PROFILE="${{ steps.ssm.outputs.SPRING_ACTIVE_PROFILE }}"
+          export SERVICE_PEDIDO="http://pedido-service.default.svc.cluster.local:8080"
+          envsubst < k8s/configmap.yaml > k8s/configmap_rendered.yaml
+
       - name: Update kubeconfig
-        run: aws eks update-kubeconfig --name entrega-app-dev --region ${{ vars.AWS_REGION }}
+        run: aws eks update-kubeconfig --name lanchonete-app-dev --region ${{ vars.AWS_REGION }}
 
       - name: Apply Kubernetes manifests
         run: |
           kubectl apply -f k8s/
-          kubectl rollout status deployment/entrega-app
+          kubectl rollout status deployment/producao-app

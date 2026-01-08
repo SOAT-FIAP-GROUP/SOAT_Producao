@@ -35,7 +35,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-            -Dsonar.projectKey=SOAT-FIAP-GROUP_SOAT_Entrega \
+            -Dsonar.projectKey=SOAT-FIAP-GROUP_SOAT_Producao \
             -Dsonar.organization=soat-fiap-group \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.exclusions="**/api/controller/**,**/config/**,**/mapper/**,**/gateway/**,**/dto/**,**/entity/**,**/exception/**,**/adapter/**,**/AppConstants.java,**/*Application.java" \
