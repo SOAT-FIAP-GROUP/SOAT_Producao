@@ -7,4 +7,4 @@ data:
   spring.datasource.db-name: ${SPRING_DATASOURCE_NAME}
   spring.datasource.username: ${SPRING_DATASOURCE_USERNAME}
   spring.profiles.active: ${SPRING_ACTIVE_PROFILE}
-  services.pedido.url: ${SPRING_DATASOURCE_URL}
+  services.pedido.url: ${SERVICE_URL_PEDIDO}
