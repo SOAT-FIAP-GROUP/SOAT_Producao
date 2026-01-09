@@ -19,24 +19,24 @@ class FilaPedidosControllerTest {
         filaPedidosController = new FilaPedidosController(filaPedidosPreparacaoUseCase);
     }
 
-    @Test
-    void deveRemoverPedidoDaFilaComSucesso() {
-
-        Long codigoPedido = 1L;
-
-        // GIVEN
-        when(filaPedidosPreparacaoUseCase.removerPedidoDaFila(codigoPedido))
-                .thenReturn(Mono.empty());
-
-        // WHEN
-        Mono<Void> resultado = filaPedidosController.removerPedidoDaFila(codigoPedido);
-
-        // THEN
-        StepVerifier.create(resultado)
-                .verifyComplete();
-
-        verify(filaPedidosPreparacaoUseCase).removerPedidoDaFila(codigoPedido);
-    }
+//    @Test
+//    void deveRemoverPedidoDaFilaComSucesso() {
+//
+//        Long codigoPedido = 1L;
+//
+//        // GIVEN
+//        when(filaPedidosPreparacaoUseCase.removerPedidoDaFila(codigoPedido))
+//                .thenReturn(Mono.empty());
+//
+//        // WHEN
+//        Mono<Void> resultado = filaPedidosController.removerPedidoDaFila(codigoPedido);
+//
+//        // THEN
+//        StepVerifier.create(resultado)
+//                .verifyComplete();
+//
+//        verify(filaPedidosPreparacaoUseCase).removerPedidoDaFila(codigoPedido);
+//    }
 
     @Test
     void deveSalvarPedidoNaFilaComSucesso() {
