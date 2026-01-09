@@ -14,7 +14,7 @@ class FilaPedidosControllerTest {
     private FilaPedidosController filaPedidosController;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         filaPedidosPreparacaoUseCase = mock(IFilaPedidosPreparacaoUseCase.class);
         filaPedidosController = new FilaPedidosController(filaPedidosPreparacaoUseCase);
     }

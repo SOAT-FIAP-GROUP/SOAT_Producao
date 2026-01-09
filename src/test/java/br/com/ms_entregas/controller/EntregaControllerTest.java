@@ -11,23 +11,24 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+
 import static org.mockito.Mockito.*;
 
-public class EntregaControllerTest {
+class EntregaControllerTest {
 
     private IEntregaUseCase entregaUseCase;
 
     private EntregaController entregaController;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         entregaUseCase = mock(IEntregaUseCase.class);
 
         entregaController = new EntregaController(entregaUseCase);
     }
 
     @Test
-    public void deveRetornarEntregaResponseQuandoPedidoForEntregueComSucesso() {
+    void deveRetornarEntregaResponseQuandoPedidoForEntregueComSucesso() {
 
         EntregaRequest entregaRequest = mock(EntregaRequest.class);
         Entrega entrega = mock(Entrega.class);
@@ -56,5 +57,4 @@ public class EntregaControllerTest {
             verify(entregaUseCase, times(1)).entregarPedido(entrega);
         }
     }
-
 }

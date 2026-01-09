@@ -2,11 +2,9 @@ package br.com.ms_entregas.usecase.impl;
 
 import br.com.ms_entregas.entity.FilaPedidosPreparacao;
 import br.com.ms_entregas.exception.EntityNotFoundException;
-import br.com.ms_entregas.gateway.IEntregaGateway;
 import br.com.ms_entregas.gateway.IFilaPedidosPreparacaoGateway;
 import br.com.ms_entregas.gateway.IPedidoGateway;
 import br.com.ms_entregas.gateway.impl.http.dto.response.PedidoResponse;
-import br.com.ms_entregas.usecase.IFilaPedidosPreparacaoUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
@@ -14,7 +12,8 @@ import reactor.test.StepVerifier;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -24,7 +23,7 @@ class FilaPedidosPreparacaoUseCaseTest {
     private FilaPedidosPreparacaoUseCase filaPedidosPreparacaoUseCase;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         filaPedidosPreparacaoGateway = mock(IFilaPedidosPreparacaoGateway.class);
         pedidoGateway = mock(IPedidoGateway.class);
         filaPedidosPreparacaoUseCase = new FilaPedidosPreparacaoUseCase(filaPedidosPreparacaoGateway, pedidoGateway);

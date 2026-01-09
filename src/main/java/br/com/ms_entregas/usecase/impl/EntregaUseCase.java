@@ -2,7 +2,6 @@ package br.com.ms_entregas.usecase.impl;
 
 import br.com.ms_entregas.entity.Entrega;
 import br.com.ms_entregas.gateway.IEntregaGateway;
-import br.com.ms_entregas.gateway.IFilaPedidosPreparacaoGateway;
 import br.com.ms_entregas.gateway.IPedidoGateway;
 import br.com.ms_entregas.gateway.entity.enums.StatusPedidoEnum;
 import br.com.ms_entregas.usecase.IEntregaUseCase;
