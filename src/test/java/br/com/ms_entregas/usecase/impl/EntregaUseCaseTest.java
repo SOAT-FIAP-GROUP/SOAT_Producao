@@ -13,7 +13,8 @@ import reactor.test.StepVerifier;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -24,7 +25,7 @@ class EntregaUseCaseTest {
     private EntregaUseCase entregaUseCase;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         entregaGateway = mock(IEntregaGateway.class);
         pedidoGateway = mock(IPedidoGateway.class);
         filaPedidosPreparacaoUseCase = mock(IFilaPedidosPreparacaoUseCase.class);
