@@ -21,6 +21,7 @@ public class EntregaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
 
+    @Column(name = "pedidocodigo")
     private Long pedidoCodigo;
 
     @Column(name = "datahoraentrega")
