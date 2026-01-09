@@ -94,7 +94,7 @@ Assista ao vídeo com demonstração do funcionamento da aplicação e da arquit
     git clone https://github.com/SOAT-FIAP-GROUP/SOAT_Producao.git
     cd SOAT_Producao
     ```
-3. Crie o banco de dados DymanoDB via terraform
+3. Crie o banco de dados RDS via terraform
 
 4. Execute a aplicação via Maven:
     ```bash
