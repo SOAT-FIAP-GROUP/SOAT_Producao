@@ -26,7 +26,7 @@ jobs:
 
       - name: Set Docker image variable
         run: |
-          DOCKER_IMAGE="${{ secrets.DOCKER_USERNAME }}/entrega-app:latest"
+          DOCKER_IMAGE="${{ secrets.DOCKER_USERNAME }}/producao-app:latest"
           echo "DOCKER_IMAGE=$DOCKER_IMAGE" >> $GITHUB_ENV
 
 
@@ -40,14 +40,6 @@ jobs:
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ vars.AWS_REGION }}
 
-      - name: Get Terraform outputs (RDS)
-        if: ${{ inputs.destroy != 'true' }}
-        id: tf_outputs
-        run: |
-          SPRING_DATASOURCE_URL=$(terraform output -raw db_instance_endpoint_producao)
-          echo "SPRING_DATASOURCE_URL=$SPRING_DATASOURCE_URL" >> $GITHUB_OUTPUT
-
-
       - name: Get SSM parameters
         id: ssm
         run: |
@@ -55,14 +47,18 @@ jobs:
           SPRING_DATASOURCE_NAME=$(aws ssm get-parameter --name "SPRING_DATASOURCE_NAME" --with-decryption --query "Parameter.Value" --output text)
           SPRING_DATASOURCE_USERNAME=$(aws ssm get-parameter --name "SPRING_DATASOURCE_USERNAME" --with-decryption --query "Parameter.Value" --output text)
           SPRING_DATASOURCE_PASSWORD=$(aws ssm get-parameter --name "SPRING_DATASOURCE_PASSWORD" --with-decryption --query "Parameter.Value" --output text)
+          SPRING_DATASOURCE_URL=$(aws ssm get-parameter --name "SPRING_DATASOURCE_URL_PRODUCAO" --with-decryption --query "Parameter.Value" --output text)
+          
           echo "SPRING_ACTIVE_PROFILE=$SPRING_ACTIVE_PROFILE" >> $GITHUB_OUTPUT
           echo "SPRING_DATASOURCE_NAME=$SPRING_DATASOURCE_NAME" >> $GITHUB_OUTPUT
           echo "SPRING_DATASOURCE_USERNAME=$SPRING_DATASOURCE_USERNAME" >> $GITHUB_OUTPUT
           echo "SPRING_DATASOURCE_PASSWORD=$SPRING_DATASOURCE_PASSWORD" >> $GITHUB_OUTPUT
+          echo "SPRING_DATASOURCE_URL=$SPRING_DATASOURCE_URL" >> $GITHUB_OUTPUT
+
 
       - name: Render ConfigMap
         run: |
-          export SPRING_DATASOURCE_URL="${{ steps.tf_outputs.outputs.SPRING_DATASOURCE_URL }}"
+          export SPRING_DATASOURCE_URL="${{ steps.ssm.outputs.SPRING_DATASOURCE_URL }}"
           export SPRING_DATASOURCE_USERNAME="${{ steps.ssm.outputs.SPRING_DATASOURCE_USERNAME }}"
           export SPRING_DATASOURCE_NAME="${{ steps.ssm.outputs.SPRING_DATASOURCE_NAME }}"
           export SPRING_ACTIVE_PROFILE="${{ steps.ssm.outputs.SPRING_ACTIVE_PROFILE }}"
