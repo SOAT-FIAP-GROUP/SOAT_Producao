@@ -3,6 +3,7 @@ package br.com.ms_entregas.gateway;
 import br.com.ms_entregas.entity.FilaPedidosPreparacao;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IFilaPedidosPreparacaoGateway {
@@ -15,4 +16,5 @@ public interface IFilaPedidosPreparacaoGateway {
 
     Mono<Void> removerPedidoDaFila(FilaPedidosPreparacao entity);
 
+    List<FilaPedidosPreparacao> listar();
 }

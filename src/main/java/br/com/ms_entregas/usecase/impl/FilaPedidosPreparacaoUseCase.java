@@ -9,6 +9,8 @@ import br.com.ms_entregas.usecase.IFilaPedidosPreparacaoUseCase;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+import java.util.List;
+
 public class FilaPedidosPreparacaoUseCase implements IFilaPedidosPreparacaoUseCase {
 
     private final IFilaPedidosPreparacaoGateway filaPedidosPreparacaoGateway;
@@ -18,6 +20,7 @@ public class FilaPedidosPreparacaoUseCase implements IFilaPedidosPreparacaoUseCa
         this.filaPedidosPreparacaoGateway = filaPedidosPreparacaoGateway;
         this.pedidoGateway = pedidoGateway;
     }
+
     @Override
     public Mono<FilaPedidosPreparacao> salvar(Long idPedido) {
         return pedidoGateway.buscarPedidoPorId(idPedido)
@@ -49,6 +52,11 @@ public class FilaPedidosPreparacaoUseCase implements IFilaPedidosPreparacaoUseCa
     public Mono<Void> removerPedidoDaFila(Long idPedido) {
         return findByPedidoPorId(idPedido)
                 .flatMap(filaPedidosPreparacaoGateway::removerPedidoDaFila);
+    }
+
+    @Override
+    public List<FilaPedidosPreparacao> listarPedidosNaFila() {
+        return filaPedidosPreparacaoGateway.listar();
     }
 
 }

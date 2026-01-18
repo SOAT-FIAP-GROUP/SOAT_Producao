@@ -1,11 +1,18 @@
 package br.com.ms_entregas.controller;
 
+import br.com.ms_entregas.controller.mapper.dto.response.FilaResponse;
 import br.com.ms_entregas.entity.FilaPedidosPreparacao;
 import br.com.ms_entregas.usecase.IFilaPedidosPreparacaoUseCase;
+import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -18,25 +25,6 @@ class FilaPedidosControllerTest {
         filaPedidosPreparacaoUseCase = mock(IFilaPedidosPreparacaoUseCase.class);
         filaPedidosController = new FilaPedidosController(filaPedidosPreparacaoUseCase);
     }
-
-//    @Test
-//    void deveRemoverPedidoDaFilaComSucesso() {
-//
-//        Long codigoPedido = 1L;
-//
-//        // GIVEN
-//        when(filaPedidosPreparacaoUseCase.removerPedidoDaFila(codigoPedido))
-//                .thenReturn(Mono.empty());
-//
-//        // WHEN
-//        Mono<Void> resultado = filaPedidosController.removerPedidoDaFila(codigoPedido);
-//
-//        // THEN
-//        StepVerifier.create(resultado)
-//                .verifyComplete();
-//
-//        verify(filaPedidosPreparacaoUseCase).removerPedidoDaFila(codigoPedido);
-//    }
 
     @Test
     void deveSalvarPedidoNaFilaComSucesso() {
@@ -58,5 +46,35 @@ class FilaPedidosControllerTest {
                 .verifyComplete();
 
         verify(filaPedidosPreparacaoUseCase).salvar(codigoPedido);
+    }
+
+    @Test
+    void deveBuscarPedidoNaFilaComSucesso() {
+        Long codigoPedido = 1L;
+        FilaPedidosPreparacao fila = new FilaPedidosPreparacao(1L, 1L);
+        when(filaPedidosPreparacaoUseCase.findByPedidoPorId(codigoPedido))
+                .thenReturn(Mono.just(fila));
+
+        filaPedidosController.buscarPedidoNaFila(codigoPedido);
+
+        verify(filaPedidosPreparacaoUseCase).findByPedidoPorId(codigoPedido);
+    }
+
+    @Test
+    void deveListarPedidosNaFilaComSucesso() {
+        FilaPedidosPreparacao item1 = new FilaPedidosPreparacao(1L, 1L);
+        FilaPedidosPreparacao item2 = new FilaPedidosPreparacao(2L, 2L);
+        List<FilaPedidosPreparacao> fila = new ArrayList<>();
+        fila.add(item1);
+        fila.add(item2);
+
+        when(filaPedidosPreparacaoUseCase.listarPedidosNaFila())
+                .thenReturn(fila);
+
+        List<FilaResponse> resposta = filaPedidosController.listarPedidosNaFila();
+        verify(filaPedidosPreparacaoUseCase).listarPedidosNaFila();
+        Assertions.assertEquals(1L, resposta.get(0).id());
+        Assertions.assertEquals(2L, resposta.get(1).id());
+
     }
 }

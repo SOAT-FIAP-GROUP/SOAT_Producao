@@ -9,6 +9,7 @@ import br.com.ms_entregas.gateway.persistence.jpa.FilaPedidosPreparacaoRepositor
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+import java.util.List;
 import java.util.Optional;
 
 public class FilaPedidosPreparacaoGateway implements IFilaPedidosPreparacaoGateway {
@@ -41,6 +42,12 @@ public class FilaPedidosPreparacaoGateway implements IFilaPedidosPreparacaoGatew
                         FilaPedidosPreparacaoMapper.toEntityPersistence(entity)
                 )
         ).subscribeOn(Schedulers.boundedElastic()).then();
+    }
+
+    @Override
+    public List<FilaPedidosPreparacao> listar() {
+        return filaPedidosPreparacaoRepository.findAll()
+                .stream().map(FilaPedidosPreparacaoEntity::toModel).toList();
     }
 
 

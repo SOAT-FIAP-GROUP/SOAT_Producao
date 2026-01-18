@@ -4,12 +4,16 @@ import br.com.ms_entregas.entity.FilaPedidosPreparacao;
 import br.com.ms_entregas.exception.EntityNotFoundException;
 import br.com.ms_entregas.gateway.IFilaPedidosPreparacaoGateway;
 import br.com.ms_entregas.gateway.IPedidoGateway;
+import br.com.ms_entregas.gateway.entity.FilaPedidosPreparacaoEntity;
 import br.com.ms_entregas.gateway.impl.http.dto.response.PedidoResponse;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -145,5 +149,22 @@ class FilaPedidosPreparacaoUseCaseTest {
 
         verify(filaPedidosPreparacaoGateway).findByPedidocodigoId(pedidoId);
         verify(filaPedidosPreparacaoGateway, never()).removerPedidoDaFila(any());
+    }
+
+    @Test
+    void deveListarPedidosNaFilaComSucesso(){
+        FilaPedidosPreparacao item1 = new FilaPedidosPreparacao(1L, 1L);
+        FilaPedidosPreparacao item2 = new FilaPedidosPreparacao(2L, 2L);
+        List<FilaPedidosPreparacao> list = new ArrayList<>();
+        list.add(item1);
+        list.add(item2);
+        when(filaPedidosPreparacaoGateway.listar())
+                .thenReturn(list);
+
+        List<FilaPedidosPreparacao> response = filaPedidosPreparacaoUseCase.listarPedidosNaFila();
+
+        assertEquals(1L, response.get(0).id());
+        assertEquals(2L, response.get(1).id());
+
     }
 }
