@@ -11,6 +11,12 @@
 
 ---
 
+## 📦 Evidência da cobertura de testes SonarCloud
+
+![producao-evidencia-sonar.png](producao-evidencia-sonar.png)
+
+---
+
 ## 📦 Funcionalidades Entregues na Fase 4
 
 - Implementação de API Gateway
