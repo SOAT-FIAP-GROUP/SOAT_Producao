@@ -22,7 +22,7 @@ public class FilaPedidosAPIController {
     }
 
     @DeleteMapping("/remover/{codigoPedido}")
-    @Operation(summary = "Remove pedido da fila de preparo")
+    @Operation(summary = "Remove pedido da fila de preparo",description = "Remove pedido da fila de preparo com base no id do pedido")
     public Mono<ResponseEntity<Void>> removerPedidoDaFilaDePreparo(@PathVariable Long codigoPedido) {
         return filaPedidosController.removerPedidoDaFila(codigoPedido)
                 .thenReturn(ResponseEntity.noContent().build());

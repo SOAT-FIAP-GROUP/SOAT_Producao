@@ -159,9 +159,65 @@ Para ter acesso aos Endpoints e exemplos faça o download da collection e import
 
 ### Produção
 
+####  Fila de pedido
+
+#### ❌ Remover pedido 
+
+**Base Path** `/api/fila`
+
+**DELETE** `/remover/{pedidoId}`
+
+**Resposta:**
+```json
+{
+}
+```
+
+#### 🚚 Adicionar pedido
+
+**POST** `/adicionar/{pedidoId}`
+
+**Resposta:**
+```json
+{
+}
+```
+
+#### 🔎 Buscar pedido
+
+**GET** `/buscar/{pedidoId}`
+
+**Resposta:**
+
+```json
+{
+   "id": 1,
+   "pedidoId": 1
+}
+```
+
+#### 📄 Listar pedidos na fila
+
+**GET** `/listar`
+
+**Resposta:**
+
+```json
+[
+   {
+     "id": 1,
+     "pedidoId": 1
+   },
+   {
+   "id": 2,
+   "pedidoId": 2
+   }
+]
+```
+
 #### 🚚 Finalizar pedido
 
-**POST** `/entregar`
+**POST** `/api/entregar`
 
 **Body:**
 ```json
